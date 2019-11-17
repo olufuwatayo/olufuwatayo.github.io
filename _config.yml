@@ -117,13 +117,13 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-       url: mailto:olufuwatayo@gmail.com
+       #url: mailto:olufuwatayo@gmail.com
     - label: "Website"
       icon: "fas fa-fw fa-link"
-       url: "https://olufuwatayo.com"
+       #url: "https://olufuwatayo.com"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-       url: "https://twitter.com/olufuwatayo"
+       #url: "https://twitter.com/olufuwatayo"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
       # url: "https://facebook.com/"

@@ -113,11 +113,11 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "DevOps Engineer with a passion for building and automating stuff."
   location         : "127.0.0.1"
-  email            :
+  email            : "olufuwatayo@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-       url: "mailto:olufuwatayo@gmail.com"
+       url: mailto:olufuwatayo@gmail.com
     - label: "Website"
       icon: "fas fa-fw fa-link"
        url: "https://olufuwatayo.com"

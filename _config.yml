@@ -13,12 +13,12 @@ remote_theme           : "mmistakes/minimal-mistakes"
 
 # remote_theme: "mmistakes/minimal-mistakes@4.17.2"
 # theme                  : "minimal-mistakes-jekyll"
-# remote_theme           : "mmistakes/minimal-mistakes"
+remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Musing of a DevOps Engineer | Olufuwa Samson temitayo"
+title                    : "Musing of a DevOps Engineer"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Olufuwa Samson Temitayo"

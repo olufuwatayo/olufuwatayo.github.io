@@ -1,5 +1,5 @@
 ---
-title: "Welcome to My website!"
+title: "Introduction to IAC with terraform!"
 date: 2020-01-31T15:34:30-04:00
 categories:
   - blog
@@ -35,8 +35,8 @@ We’d be using AWS for this so be sure you have an AWS account by signing up fo
 There are better ways to authenticate terraform instead of hardcoding access keys but for the sake of simplicity let us add the secret key and access key. 
 
 Create a new file called Provider.tf 
+{% highlight terraform %}
 
-{% highlight terraform [linenos]%}
 # Configure the AWS Provider
 provider "aws" {
   version = "~> 2.0"
@@ -50,8 +50,9 @@ provider "aws" {
 
 Create another file ec2.tf
 
+{% highlight terraform %}
 
-{% highlight terraform [linenos]%}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -83,7 +84,7 @@ Run terraform init
 Terraform plan
 Terraform apply
 
-In the next post, I’d go into more details on how to set up the ec2 instance with ssh keys, Security group, user data(Install a web server ) 
+In the next post, I’d go into more details on how to set up the ec2 instance with ssh keys, Security group, user data(Install a web  server ) 
 
 
 

@@ -28,10 +28,10 @@ Let’s get started.
 
 Download terraform from https://www.terraform.io/downloads.html,  and follow instructions to install it or just run as an executable.
 
-We’d be using AWS for this so be sure you have an AWS account by signing up for it here  https://portal.aws.amazon.com/billing/signup. ![AWS Registration ](/assets/images/2020/Jan/amazon-registration-free-tier.png)  <img src="/assets/images/2020/Jan/amazon-registration-free-tier.png" alt="AWS Registration page">
+We’d be using AWS for this so be sure you have an AWS account by signing up for it here  https://portal.aws.amazon.com/billing/signup. ![AWS Registration  page](/assets/images/2020/Jan/amazon-registration-free-tier.png)  
 
+ Once signed in go to the IAM section, click on your username, security credential tab, create an access key, once you have your access key. ![Iam credentials aws](/assets/images/2020/Jan/aws-iam.png)  
 
- Once signed in go to the IAM section, click on your username, security credential tab, create an access key, once you have your access key.
 
 There are better ways to authenticate terraform instead of hardcoding access keys but for the sake of simplicity let us add the secret key and access key. 
 
@@ -88,6 +88,14 @@ terraform plan
 terraform apply
 {% endhighlight %}
 
+terraform init
+![terraform init](/assets/images/2020/Jan/terraform init.png) 
+terraform plan
+[terraform plan](/assets/images/2020/Jan/terraform-plan.png) 
+terraform apply
+[terraform apply](/assets/images/2020/Jan/terraform-apply.png) 
+terraform destroy
+[terraform destroy](/assets/images/2020/Jan/terraform-destroy.png)  
 In the next post, I’d go into more details on how to set up the ec2 instance with ssh keys, Security group, user data(Install a web  server ) 
 
 

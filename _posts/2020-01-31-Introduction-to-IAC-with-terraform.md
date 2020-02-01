@@ -28,7 +28,7 @@ Let’s get started.
 
 Download terraform from https://www.terraform.io/downloads.html,  and follow instructions to install it or just run as an executable.
 
-We’d be using AWS for this so be sure you have an AWS account by signing up for it here Amazon Web Services.
+We’d be using AWS for this so be sure you have an AWS account by signing up for it here  https://portal.aws.amazon.com/billing/signup.
 
  Once signed in go to the IAM section, click on your username, security credential tab, create an access key, once you have your access key.
 
@@ -80,9 +80,12 @@ resource "aws_instance" "web" {
 {% endhighlight %}
 
 
-Run terraform init
-Terraform plan
-Terraform apply
+Run 
+{% highlight terraform %}
+terraform init
+terraform plan
+terraform apply
+{% endhighlight %}
 
 In the next post, I’d go into more details on how to set up the ec2 instance with ssh keys, Security group, user data(Install a web  server ) 
 

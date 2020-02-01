@@ -28,7 +28,8 @@ Let’s get started.
 
 Download terraform from https://www.terraform.io/downloads.html,  and follow instructions to install it or just run as an executable.
 
-We’d be using AWS for this so be sure you have an AWS account by signing up for it here  https://portal.aws.amazon.com/billing/signup. ![AWS Registration ](./assets/images/2020/Jan/amazon-registration-free-tier.png)
+We’d be using AWS for this so be sure you have an AWS account by signing up for it here  https://portal.aws.amazon.com/billing/signup. ![AWS Registration ](/assets/images/2020/Jan/amazon-registration-free-tier.png)  <img src="/assets/images/2020/Jan/amazon-registration-free-tier.png" alt="AWS Registration page">
+
 
  Once signed in go to the IAM section, click on your username, security credential tab, create an access key, once you have your access key.
 

@@ -94,12 +94,13 @@ terraform init
 terraform plan
 
 ![terraform plan](/assets/images/2020/Jan/terraform init.png) 
+
 terraform apply
 
-![terraform plan] (/assets/images/2020/Jan/terraform-apply.png) 
+![terraform apply] (/assets/images/2020/Jan/terraform-apply.png) 
 
 terraform destroy
-![terraform destroy] (/assets/images/2020/Jan/terraform-destroy.png)  
+![terraform init] (/assets/images/2020/Jan/terraform-destroy.png)  
 In the next post, I’d go into more details on how to set up the ec2 instance with ssh keys, Security group, user data(Install a web  server ) 
 
 

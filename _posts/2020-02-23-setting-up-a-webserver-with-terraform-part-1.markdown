@@ -14,33 +14,17 @@ To achieve this we need the following components
 **Security Group**, This is important as by default all access to our instances are blocked by amazon virtual firewall unless we explicitly allow ports and ip address to access our instance
 Userdata. This is the step that installs apps that we need on our instance when it runs for the first time.
 
-**User data** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts. You can pass two types of user data to Amazon EC2: shell scripts and cloud-init directives. You can also pass this data into the launch wizard as plain text, as a file (this is useful for launching instances using the command line tools), or as base64-encoded text (for API calls).
-
+**User data** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts
 
 
 VPC: 
 
-Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways. You can use both IPv4 and IPv6 in your VPC for secure and easy access to resources and applications.
-
-A VPC is primarily concerned with enabling the following capabilities:
-
-Isolating your AWS resources from other accounts
-Routing network traffic to and from your instances
-Protecting your instances from network intrusion
-There are six core components which are fundamental to a VPC and will be created by a user or by AWS as part of a default VPC. These components are:
-
-VPC CIDR Block
-Subnet
-Gateways
-Route Table
-Network Access Control Lists (ACLs)
-Security Group
+Amazon Virtual Private Cloud ([Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components)) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways. 
 
 
-In aws we have what is referred to as a default VPC (this is a network that has a default route and an IGW to route request over the internet)
 
 
-https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components
+
 A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website. You can modify the components of your default VPC as needed. If you prefer to create a nondefault VPC that suits your specific requirements; for example, using your preferred CIDR block range and subnet sizes, see the example scenarios.
 
 When you deploy a new tf instance without specifying the default VPC terraform deploys it in whatever your default VPC would be.

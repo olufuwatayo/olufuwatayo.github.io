@@ -1,14 +1,13 @@
 ---
-title: "Introduction to IAC with terraform!"
-date: 2020-01-31T15:34:30-04:00
+title: Introduction to IAC with terraform!
+date: 2020-01-31 19:34:30 Z
 categories:
-  - blog
+- blog
 tags:
-  - AWS
-  - DevOps
-  - Terraform
+- AWS
+- DevOps
+- Terraform
 ---
-
 
 Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently. 
 

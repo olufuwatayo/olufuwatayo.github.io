@@ -1,14 +1,13 @@
 ---
-title: "Welcome to My website!"
-date: 2019-11-18T15:34:30-04:00
+title: Welcome to My website!
+date: 2019-11-18 19:34:30 Z
 categories:
-  - blog
+- blog
 tags:
-  - AWS
-  - DevOps
-  - Terraform
+- AWS
+- DevOps
+- Terraform
 ---
-
 
 I'd be writting about Tech, DevOps, Security and sometimes about my life journey.
 

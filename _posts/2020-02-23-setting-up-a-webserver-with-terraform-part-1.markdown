@@ -16,93 +16,78 @@ Userdata. This is the step that installs apps that we need on our instance when 
 
 **User data** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts
 
+**VPC: **
 
-VPC: 
+Amazon Virtual Private Cloud ([Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components)) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
 
-Amazon Virtual Private Cloud ([Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components)) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways. 
+A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website. You can modify the components of your default VPC as needed.
 
+When you deploy a new terraform instance without specifying the default VPC terraform deploys it in whatever your default VPC would be.
 
-
-
-
-A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website. You can modify the components of your default VPC as needed. If you prefer to create a nondefault VPC that suits your specific requirements; for example, using your preferred CIDR block range and subnet sizes, see the example scenarios.
-
-When you deploy a new tf instance without specifying the default VPC terraform deploys it in whatever your default VPC would be.
-
-In this case, we would just deploy our instance in a default VPC and create an ssh key for it. 
-
-
+In this case, we would just deploy our instance in a default VPC and create an ssh key for it.
 
 There are two ways to we can launch our instance in a VPC in aws using terraform. We can use the default VPC which comes with all accounts, or we can create our own vpc with all needed components I wrote another article about creating AWS networking components in terraforming if you want to learn how you can check it here
 
-
 To do that we simply ignore the subnet field when creating the aws instance and terraform would deploy in the default subnet.
 
-#SSH key 
+**#SSH key **
 
-There are multiple ways to create ssh keys for your ec2 instance in aws using terraform. 
+There are multiple ways to create ssh keys for your ec2 instance in aws using terraform.
 You can import your pub key to aws manually from the console or using aws cli
-You can generate a key pair and upload your pub key using terraform 
+You can generate a key pair and upload your pub key using terraform
 You can make terraform create the public key pair and reference it as a variable
 
-As a beginner you should import an ssh key to aws and refrence it as a key for our aws ec2 instance.
+As a beginner, you should import an ssh key to AWS and reference it as a key for our AWS ec2 instance.
 
-1 To generate your ssh key do this on your mac type this command ssh-keygen and enter the name of your key-pair, by default your key pairs would be saved to your ~/.ssh/id_rsa ~ = your home directory 
+To generate your ssh key do this on your mac type this command `ssh-keygen` and enter the name of your key-pair, by default your key pairs would be saved to your \~/.ssh/id_rsa \~ = your home directory
 Once you have that you can login to aws and import your key pair. And now we have a key pair in aws that we can reference in terraform. Under the aws_instance resource we can add the key here like this key_name      = "ty"
 
-2) To create ssh keys using terraform for your instance you can let terraform import the private key for you like this and reference it using terraform
+1. To create ssh keys using terraform for your instance you can let terraform import the private key for you like this and reference it using terraform
 
 Generate your ssh key with this command  ssh-keygen and copy the content of the public key to “public_key = "copy_content_of_public_key_ssh_here”
 
-
 resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
+key_name   = "deployer-key"
+public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn\+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4\+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9\+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
 }
 
-3) You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
+1. You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
 
+\#security group
 
-
-#security group
-
-Once we have a key pair the next thing is to create a security group. 
+Once we have a key pair the next thing is to create a security group.
 According to aws definition of security group https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html
-A security group acts as a virtual firewall that controls the traffic for one or more instances. 
-When you launch an instance, you can specify one or more security groups; otherwise, we use the default security group. 
-
+A security group acts as a virtual firewall that controls the traffic for one or more instances.
+When you launch an instance, you can specify one or more security groups; otherwise, we use the default security group.
 
 To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address
 resource "aws_security_group" "allow_from_my_ip" {
-  name        = "allow_from_my_ip"
-  description = "Allow all inbound traffic from my ip "
-  #vpc_id      = "${aws_vpc.main.id}"
+name        = "allow_from_my_ip"
+description = "Allow all inbound traffic from my ip "
+\#vpc_id      = "${aws_vpc.main.id}"
 
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["100.23.34.12/32"]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal 
-  }
-
-  egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"] #we want to open the outgoing connections to the world 
-  }
+ingress {
+from_port   = 0
+to_port     = 0
+protocol    = "-1"
+cidr_blocks = \["100.23.34.12/32"\]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
 }
 
+egress {
+from_port       = 0
+to_port         = 0
+protocol        = "-1"
+cidr_blocks     = \["0.0.0.0/0"\] #we want to open the outgoing connections to the world
+}
+}
 
-#userdata to install Nginx
+\#userdata to install Nginx
 sudo apt-get update -y
 sudo apt-get istall nginx -y
 
-
-
 In the ec2.tf add this block of code below
 data "template_file" "myuserdata" {
-  template = "${file("${path.cwd}/myuserdata.tpl")}"
+template = "${file("${path.cwd}/myuserdata.tpl")}"
 }
 
 This is calling a data resource called template_file and we assigned the resource name myuserdata
@@ -113,29 +98,24 @@ terraform would load this file up and parse it as an ec2 userdata. You can also 
 
 Create a new file named `myuserdata.tpl` and paste this shell script
 This is just a simple shell script that does two things update and install nginx webserver
-#!/bin/bash
+\#!/bin/bash
 sudo apt-get update -y
-sudo apt-get install nginx -y 
+sudo apt-get install nginx -y
 
 After this we can launch our ec2 insatnce with an nginx web server running on it.
-
 
 Lastly we would need to get the public ip address of out instance using output variable
 When building potentially complex infrastructure, Terraform stores hundreds or thousands of attribute values for all your resources. But as a user of Terraform, you may only be interested in a few values of importance, such as a load balancer IP, VPN address, etc.
 
 Outputs are a way to tell Terraform what data is important. This data is outputted when apply is called, and can be queried using the terraform output command.
 
-
-create a file called outputs.tf 
+create a file called outputs.tf
 
 output "public_ip" {
-  description = "List of public IP addresses assigned to the instances, if applicable"
-  value       = aws_instance.web.*.public_ip
+description = "List of public IP addresses assigned to the instances, if applicable"
+value       = aws_instance.web.\*.public_ip
 }
-
 
 run terraform init
 terraform plan
 terraform apply
-
-

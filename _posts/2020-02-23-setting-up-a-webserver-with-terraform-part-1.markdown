@@ -158,4 +158,4 @@ resource "aws_instance" "web" {
 {% endhighlight %}
 
 
-
+[Part 2 here ](http://www.olufuwatayo.com/setting-up-a-webserver-with-terraform-part-2/)

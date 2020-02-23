@@ -16,7 +16,7 @@ Userdata. This is the step that installs apps that we need on our instance when 
 
 **User data** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts
 
-**VPC: **
+\*\*VPC: \*\*
 
 Amazon Virtual Private Cloud ([Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components)) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
 
@@ -30,7 +30,7 @@ There are two ways to we can launch our instance in a VPC in aws using terraform
 
 To do that we simply ignore the subnet field when creating the aws instance and terraform would deploy in the default subnet.
 
-**#SSH key **
+\*\*#SSH key \*\*
 
 There are multiple ways to create ssh keys for your ec2 instance in aws using terraform.
 You can import your pub key to aws manually from the console or using aws cli
@@ -39,17 +39,27 @@ You can make terraform create the public key pair and reference it as a variable
 
 As a beginner, you should import an ssh key to AWS and reference it as a key for our AWS ec2 instance.
 
-To generate your ssh key do this on your mac type this command `ssh-keygen` and enter the name of your key-pair, by default your key pairs would be saved to your \~/.ssh/id_rsa \~ = your home directory
-Once you have that you can login to aws and import your key pair. And now we have a key pair in aws that we can reference in terraform. Under the aws_instance resource we can add the key here like this key_name      = "ty"
+To generate your ssh key do this on your mac type this command `ssh-keygen` and enter the name of your key-pair, by default your key pairs would be saved to your \`\~/.ssh/id_rsa\`.
 
-1. To create ssh keys using terraform for your instance you can let terraform import the private key for you like this and reference it using terraform
 
-Generate your ssh key with this command  ssh-keygen and copy the content of the public key to “public_key = "copy_content_of_public_key_ssh_here”
+Once you have that you can login to aws, click on ec2, click on key pairs and import your key pair. Paste the content of your keyfile that ends with the .pub
 
-resource "aws_key_pair" "deployer" {
-key_name   = "deployer-key"
+![Screenshot 2020-02-22 at 19.47.07.png](/uploads/Screenshot%202020-02-22%20at%2019.47.07.png)
+
+And now we have a key pair in aws that we can reference in terraform. Under the aws_instance terraform resource we can add the key here like this key_name      = "ty"
+
+You can also let terraform  import the public key to aws for you like this and reference it using terraform.
+
+To do this generate your ssh key with this command  \`ssh-keygen\` and copy the content of the public key to “public_key = "copy_content_of_public_key_ssh_here” section of your aws key pair.
+
+{% highlight terraform %}
+
+resource "aws_key_pair" "my_key" {
+key_name   = "my_key_name"
 public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn\+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4\+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9\+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
 }
+
+{% endhighlight %}
 
 1. You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
 

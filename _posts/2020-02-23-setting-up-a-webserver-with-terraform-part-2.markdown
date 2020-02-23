@@ -1,6 +1,12 @@
 ---
 title: Setting up a webserver with terraform part 2
 date: 2020-02-23 16:49:00 Z
+tags:
+- AWS
+- DevOps
+- Terraform
+- Web Server
+author_profile: true
 ---
 
 In the [previous section](http://www.olufuwatayo.com/setting-up-a-webserver-with-terraform-part-1/), we created our [AWS keypair](http://www.olufuwatayo.com/setting-up-a-webserver-with-terraform-part-1/) now we would attach it to our instance.
@@ -88,4 +94,4 @@ We have our web server up and running here.
 Don't forget to do a terraform destroy so you can destroy the infrastructure you just created if you don't need them anymore.
 `terraform destroy`
 ![Terraform destroy.png](/uploads/Terraform%20destroy.png)
-You can get the whole source codes here 
+You can get the whole source codes [here](https://github.com/olufuwatayo/terraform-aws-ec2-nginx) [terraform-aws-ec2-nginx ](https://github.com/olufuwatayo/terraform-aws-ec2-nginx)

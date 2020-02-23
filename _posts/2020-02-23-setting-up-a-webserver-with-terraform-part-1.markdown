@@ -97,10 +97,14 @@ Once you have that you can login to aws, click on ec2, click on key pairs and im
 ![Screenshot 2020-02-22 at 19.47.07.png](/uploads/Screenshot%202020-02-22%20at%2019.47.07.png)
 
 And now we have a key pair in aws that we can reference in terraform. Under the aws_instance terraform resource we can add the key here like this key_name      = "ty"
+This line in the aws_instance specifies the public we want to attach to the instance.
+{% highlight terraform %}
+key_name      = "ty"
+{% endhighlight %}
 
-You can also let terraform  import the public key to aws for you like this and reference it using terraform.
+You can also let terraform import the public key to AWS for you like this and reference it using terraform.
 
-To do this generate your ssh key with this command  `ssh-keygen` and copy the content of the public key to `“public_key = "copy_content_of_public_key_ssh_here”` section of your aws key pair.
+To do this generate your ssh key with this command  `ssh-keygen` and copy the content of the public key to `“public_key = "copy_content_of_public_key_ssh_here”` section of your AWS key pair.
 
 {% highlight terraform %}
 resource "aws_key_pair" "name_of_pub_key" {
@@ -108,6 +112,8 @@ resource "aws_key_pair" "name_of_pub_key" {
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
 }
 {% endhighlight %}
+
+
 
 You can also use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article. To do that you can use this block of code but this is not what we are planning to do today.
 
@@ -151,10 +157,7 @@ resource "aws_instance" "web" {
 }
 {% endhighlight %}
 
-This line in the aws_instance specifies the public we want to attach to the instance.
-{% highlight terraform %}
-key_name      = "ty"
-{% endhighlight %}
+
 
 Once we have a key pair the next thing is to create a security group.
 According to aws definition of [security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) , A security group acts as a virtual firewall that controls the traffic for one or more instances.
@@ -162,7 +165,7 @@ When you launch an instance, you can specify one or more security groups; otherw
 
 ![Screenshot 2020-02-23 at 11.09.38.png](/uploads/Screenshot%202020-02-23%20at%2011.09.38.png)
 
-To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address
+To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address. To get your public IP address just type this in the terminal `curl ipconfig.co`
 
 Create a new file called **sg.tf**
 {% highlight terraform %}
@@ -176,54 +179,53 @@ ingress {
 from_port   = 0
 to_port     = 0
 protocol    = "-1"
-cidr_blocks = \["100.34.34.34/32"\]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
+cidr_blocks = ["100.34.34.34/32"]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
 }
 
 egress {
 from_port       = 0
 to_port         = 0
 protocol        = "-1"
-cidr_blocks     = \["0.0.0.0/0"\] #we want to open the outgoing connections to the world
+cidr_blocks     = ["0.0.0.0/0"] #we want to open the outgoing connections to the world
 }
 }
 
 {% endhighlight %}
 
-\#userdata to install Nginx
+To set up the Nginx Webserver create a file called myuserdata.tpl and paste this shell script
+This is just a simple shell script that does two things update your repo list and install nginx webserver
+`#!/bin/bash
 sudo apt-get update -y
-sudo apt-get istall nginx -y
+sudo apt-get install nginx -y`
 
-In the ec2.tf add this block of code below
+In the ec2.tf add this block of code below so we can fetch our user data template and let AWS run it at launch time.
+{% highlight terraform %}
 data "template_file" "myuserdata" {
 template = "${file("${path.cwd}/myuserdata.tpl")}"
 }
-
+{% endhighlight %}
 This is calling a data resource called template_file and we assigned the resource name myuserdata
 
-The location of the file is "path.cwd" which is current working directory / file name  with the extension
+The location of the file is "path.cwd" which is current working directory/filename with the extension tpl. Terraform would load this file up and parse it as an ec2 userdata. You can also use cloud-init but for the sake of simplicity let us use user data.
 
-terraform would load this file up and parse it as an ec2 userdata. You can also use cloud-init but for the sake of eimplicity let us use userdata.
 
-Create a new file named `myuserdata.tpl` and paste this shell script
-This is just a simple shell script that does two things update and install nginx webserver
-\#!/bin/bash
-sudo apt-get update -y
-sudo apt-get install nginx -y
+After this, we can launch our ec2 insatnce with an nginx web server running on it.
 
-After this we can launch our ec2 insatnce with an nginx web server running on it.
+Lastly, we would need to get the public ip address of our instance using the output variable here is a definition from terraform about output variables
 
-Lastly we would need to get the public ip address of out instance using output variable
-When building potentially complex infrastructure, Terraform stores hundreds or thousands of attribute values for all your resources. But as a user of Terraform, you may only be interested in a few values of importance, such as a load balancer IP, VPN address, etc.
+> When building potentially complex infrastructure, Terraform stores hundreds or thousands of attribute values for all your resources. But as a user of Terraform, you may only be interested in a few values of importance, such as a load balancer IP, VPN address, etc.
 
 Outputs are a way to tell Terraform what data is important. This data is outputted when apply is called, and can be queried using the terraform output command.
 
-create a file called outputs.tf
-
+create a file called outputs.tf and paste this here
+{% highlight terraform %}
 output "public_ip" {
 description = "List of public IP addresses assigned to the instances, if applicable"
-value       = aws_instance.web.\*.public_ip
+value       = aws_instance.web.*.public_ip
 }
+{% endhighlight %}
 
-run terraform init
-terraform plan
-terraform apply
+run 
+`terraform init`
+`terraform plan`
+`terraform apply`

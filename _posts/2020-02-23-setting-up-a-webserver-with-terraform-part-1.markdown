@@ -109,7 +109,47 @@ resource "aws_key_pair" "name_of_pub_key" {
 }
 {% endhighlight %}
 
-You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
+You can also use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article. To do that you can use this block of code but this is not what we are planning to do today.
+
+{% highlight terraform %}
+variable "key_name" {}
+
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = "${var.key_name}"
+  public_key = "${tls_private_key.example.public_key_openssh}"
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "web" {
+  ami           = "${data.aws_ami.ubuntu.id}"
+  instance_type = "t2.micro"
+  key_name      = "${aws_key_pair.generated_key.key_name}"
+
+  tags {
+    Name = "HelloWorld"
+  }
+}
+{% endhighlight %}
 
 This line in the aws_instance specifies the public we want to attach to the instance.
 {% highlight terraform %}

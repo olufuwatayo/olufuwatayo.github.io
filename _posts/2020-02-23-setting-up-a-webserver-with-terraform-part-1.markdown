@@ -41,6 +41,40 @@ In this case, we would just deploy our instance in a default VPC and create an s
 There are two ways to we can launch our instance in a VPC in aws using terraform. We can use the default VPC which comes with all accounts, or we can create our own vpc with all needed components I wrote another article about creating AWS networking components in terraforming if you want to learn how you can check it here
 
 To do that we simply ignore the subnet field when creating the aws instance and terraform would deploy in the default subnet.
+Create a new file named ec2.tf and add this block of code
+
+
+{% highlight terraform %}
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  key_name      = "ty"
+  security_groups   = ["${aws_security_group.allow_from_my_ip.name}"]
+  user_data = data.template_file.myuserdata.template
+  
+
+  tags = {
+    Name = "Nginx_web_server"
+  }
+}
+
+{% endhighlight %}
 
 \*\*#SSH key \*\*
 
@@ -69,32 +103,18 @@ You can also let terraform  import the public key to aws for you like this and r
 To do this generate your ssh key with this command  `ssh-keygen` and copy the content of the public key to `“public_key = "copy_content_of_public_key_ssh_here”` section of your aws key pair.
 
 {% highlight terraform %}
-
-resource "aws_security_group" "allow_from_my_ip" {
-  name        = "allow_from_my_ip"
-  description = "Allow all inbound traffic from my ip "
-  #vpc_id      = "${aws_vpc.main.id}"
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["100.34.34.34/32"]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal 
-  }
-
-  egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"] #we want to open the outgoing connections to the world 
-  }
+resource "aws_key_pair" "name_of_pub_key" {
+  key_name   = "ty"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
 }
-
 {% endhighlight %}
 
 You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
 
-\#security group
+This line in the aws_instance specifies the public we want to attach to the instance.
+{% highlight terraform %}
+key_name      = "ty"
+{% endhighlight %}
 
 Once we have a key pair the next thing is to create a security group.
 According to aws definition of [security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) , A security group acts as a virtual firewall that controls the traffic for one or more instances.
@@ -104,7 +124,7 @@ When you launch an instance, you can specify one or more security groups; otherw
 
 To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address
 
-\
+Create a new file called **sg.tf**
 {% highlight terraform %}
 
 resource "aws_security_group" "allow_from_my_ip" {
@@ -116,7 +136,7 @@ ingress {
 from_port   = 0
 to_port     = 0
 protocol    = "-1"
-cidr_blocks = \["100.23.34.12/32"\]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
+cidr_blocks = \["100.34.34.34/32"\]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
 }
 
 egress {

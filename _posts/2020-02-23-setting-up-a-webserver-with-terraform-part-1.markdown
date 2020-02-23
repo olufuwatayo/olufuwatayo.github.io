@@ -18,18 +18,21 @@ Today we would work on how to set up the ec2 instance with ssh keys, Security gr
 
 To achieve this we need the following components
 
-**VPC**,  Our instance needs to be in a VPC with a subnet and an Internet gateway so we can access it over the internet
-**SSH key**, We need this ssh key so we can ssh into our instance using terminal or putty
-**Security Group**, This is important as by default all access to our instances are blocked by amazon virtual firewall unless we explicitly allow ports and ip address to access our instance
-Userdata. This is the step that installs apps that we need on our instance when it runs for the first time.
+* **[VPC](https://aws.amazon.com/vpc/)**,  Our instance needs to be in a VPC with a subnet and an Internet gateway so we can access it over the internet
 
-**User data** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts
+* **[SSH key](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)**, We need this ssh key so we can ssh into our instance using terminal or putty
+
+* **[Security Group](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html)**, This is important as by default all access to our instances are blocked by amazon virtual firewall unless we explicitly allow ports and ip address to access our instance
+
+* **[User data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html)** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts
 
 \*\*VPC: \*\*
 
 Amazon Virtual Private Cloud ([Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components)) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
 
 A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website. You can modify the components of your default VPC as needed.
+
+![Screenshot 2020-02-23 at 11.02.24.png](/uploads/Screenshot%202020-02-23%20at%2011.02.24.png)
 
 When you deploy a new terraform instance without specifying the default VPC terraform deploys it in whatever your default VPC would be.
 
@@ -42,13 +45,18 @@ To do that we simply ignore the subnet field when creating the aws instance and 
 \*\*#SSH key \*\*
 
 There are multiple ways to create ssh keys for your ec2 instance in aws using terraform.
-You can import your pub key to aws manually from the console or using aws cli
-You can generate a key pair and upload your pub key using terraform
-You can make terraform create the public key pair and reference it as a variable
+
+* You can import your pub key to aws manually from the console or using aws cli
+
+* Generate a key pair and upload your pub key using terraform
+
+* Make terraform create the public key pair and reference it as a variable
 
 As a beginner, you should import an ssh key to AWS and reference it as a key for our AWS ec2 instance.
 
 To generate your ssh key do this on your mac type this command `ssh-keygen` and enter the name of your key-pair, by default your key pairs would be saved to your \`\~/.ssh/id_rsa\`.
+
+![Screenshot 2020-02-21 at 14.05.24.png](/uploads/Screenshot%202020-02-21%20at%2014.05.24.png)
 
 
 Once you have that you can login to aws, click on ec2, click on key pairs and import your key pair. Paste the content of your keyfile that ends with the .pub
@@ -70,16 +78,21 @@ public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x
 
 {% endhighlight %}
 
-1. You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
+You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
 
 \#security group
 
 Once we have a key pair the next thing is to create a security group.
-According to aws definition of [security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) 
-A security group acts as a virtual firewall that controls the traffic for one or more instances.
+According to aws definition of [security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) , A security group acts as a virtual firewall that controls the traffic for one or more instances.
 When you launch an instance, you can specify one or more security groups; otherwise, we use the default security group.
 
+![Screenshot 2020-02-23 at 11.09.38.png](/uploads/Screenshot%202020-02-23%20at%2011.09.38.png)
+
 To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address
+
+\
+{% highlight terraform %}
+
 resource "aws_security_group" "allow_from_my_ip" {
 name        = "allow_from_my_ip"
 description = "Allow all inbound traffic from my ip "
@@ -99,6 +112,8 @@ protocol        = "-1"
 cidr_blocks     = \["0.0.0.0/0"\] #we want to open the outgoing connections to the world
 }
 }
+
+{% endhighlight %}
 
 \#userdata to install Nginx
 sudo apt-get update -y

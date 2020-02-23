@@ -26,7 +26,7 @@ To achieve this we need the following components
 
 * **[User data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html)** : When you launch an instance in Amazon EC2, you have the option of passing user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts
 
-\*\*VPC: \*\*
+**VPC: **
 
 Amazon Virtual Private Cloud ([Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#default-vpc-components)) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including a selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
 
@@ -76,7 +76,7 @@ resource "aws_instance" "web" {
 
 {% endhighlight %}
 
-\*\*#SSH key \*\*
+**#SSH key **
 
 There are multiple ways to create ssh keys for your ec2 instance in aws using terraform.
 
@@ -88,7 +88,7 @@ There are multiple ways to create ssh keys for your ec2 instance in aws using te
 
 As a beginner, you should import an ssh key to AWS and reference it as a key for our AWS ec2 instance.
 
-To generate your ssh key do this on your mac type this command `ssh-keygen` and enter the name of your key-pair, by default your key pairs would be saved to your \`\~/.ssh/id_rsa\`.
+To generate your ssh key do this on your mac type this command `ssh-keygen` and enter the name of your key-pair, by default your key pairs would be saved to your `~/.ssh/id_rsa`.
 
 ![Screenshot 2020-02-21 at 14.05.24.png](/uploads/Screenshot%202020-02-21%20at%2014.05.24.png)
 
@@ -173,7 +173,7 @@ Create a new file called **sg.tf**
 resource "aws_security_group" "allow_from_my_ip" {
 name        = "allow_from_my_ip"
 description = "Allow all inbound traffic from my ip "
-\#vpc_id      = "${aws_vpc.main.id}"
+#vpc_id      = "${aws_vpc.main.id}"
 
 ingress {
 from_port   = 0

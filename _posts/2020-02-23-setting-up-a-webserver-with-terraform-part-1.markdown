@@ -12,7 +12,7 @@ tags:
 - Web Server
 ---
 
-In the last post, we did set up an AWS ec2 instance in terraform but it's just an instance with nothing running on it.
+[In the last post](http://www.olufuwatayo.com/blog/Introduction-to-IAC-with-terraform/), we did set up an AWS ec2 instance in terraform but it's just an instance with nothing running on it.
 
 Today we would work on how to set up the ec2 instance with ssh keys, Security group, user data and install NGINX (Install a web server )
 

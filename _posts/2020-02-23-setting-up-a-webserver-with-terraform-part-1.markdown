@@ -52,14 +52,10 @@ You can also let terraform  import the public key to aws for you like this and r
 
 To do this generate your ssh key with this command  \`ssh-keygen\` and copy the content of the public key to “public_key = "copy_content_of_public_key_ssh_here” section of your aws key pair.
 
-{% highlight terraform %}
-
 `resource "aws_key_pair" "my_key" {
 key_name   = "my_key_name"
 public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
 }`
-
-{% endhighlight %}
 
 1. You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
 

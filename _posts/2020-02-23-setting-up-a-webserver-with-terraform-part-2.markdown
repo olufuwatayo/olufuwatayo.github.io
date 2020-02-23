@@ -81,4 +81,11 @@ run
 `terraform apply`
 ![Terraform apply.png](/uploads/Terraform%20apply.png)
 
+We have our web server up and running here.
+![Nginx server up and running.png](/uploads/Nginx%20server%20up%20and%20running.png)
+
+
+Don't forget to do a terraform destroy so you can destroy the infrastructure you just created if you don't need them anymore.
+`terraform destroy`
+![Terraform destroy.png](/uploads/Terraform%20destroy.png)
 You can get the whole source codes here 

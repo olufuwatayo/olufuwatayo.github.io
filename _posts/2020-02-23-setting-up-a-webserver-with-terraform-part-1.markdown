@@ -58,7 +58,6 @@ To generate your ssh key do this on your mac type this command `ssh-keygen` and 
 
 ![Screenshot 2020-02-21 at 14.05.24.png](/uploads/Screenshot%202020-02-21%20at%2014.05.24.png)
 
-
 Once you have that you can login to aws, click on ec2, click on key pairs and import your key pair. Paste the content of your keyfile that ends with the .pub
 
 ![Screenshot 2020-02-22 at 19.47.07.png](/uploads/Screenshot%202020-02-22%20at%2019.47.07.png)
@@ -71,10 +70,10 @@ To do this generate your ssh key with this command  `ssh-keygen` and copy the co
 
 {% highlight terraform %}
 
-resource "aws_key_pair" "my_key" {\
-key_name   = "my_key_name"\
-public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn\+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4\+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9\+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"\
-}
+`resource "aws_key_pair" "my_key" {`\
+`key_name   = "my_key_name"`\
+`public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"`\
+`}`
 
 {% endhighlight %}
 

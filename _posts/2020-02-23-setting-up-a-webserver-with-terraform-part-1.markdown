@@ -1,6 +1,15 @@
 ---
 title: Setting up a webserver with terraform part 1
 date: 2020-02-23 12:56:00 Z
+tags:
+- Terraform
+- Aws
+- Security groups
+- VPC
+- Subnet
+- Cidr
+- Nginx
+- Web Server
 ---
 
 In the last post, we did set up an AWS ec2 instance in terraform but it's just an instance with nothing running on it.
@@ -50,7 +59,7 @@ And now we have a key pair in aws that we can reference in terraform. Under the 
 
 You can also let terraform  import the public key to aws for you like this and reference it using terraform.
 
-To do this generate your ssh key with this command  \`ssh-keygen\` and copy the content of the public key to “public_key = "copy_content_of_public_key_ssh_here” section of your aws key pair.
+To do this generate your ssh key with this command  `ssh-keygen` and copy the content of the public key to `“public_key = "copy_content_of_public_key_ssh_here”` section of your aws key pair.
 
 `resource "aws_key_pair" "my_key" {
 key_name   = "my_key_name"
@@ -62,30 +71,30 @@ public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x
 \#security group
 
 Once we have a key pair the next thing is to create a security group.
-According to aws definition of security group https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html
+According to aws definition of [security group](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) 
 A security group acts as a virtual firewall that controls the traffic for one or more instances.
 When you launch an instance, you can specify one or more security groups; otherwise, we use the default security group.
 
 To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address
-resource "aws_security_group" "allow_from_my_ip" {
+`resource "aws_security_group" "allow_from_my_ip" {
 name        = "allow_from_my_ip"
 description = "Allow all inbound traffic from my ip "
-\#vpc_id      = "${aws_vpc.main.id}"
+#vpc_id      = "${aws_vpc.main.id}"`
 
-ingress {
+`ingress {
 from_port   = 0
 to_port     = 0
 protocol    = "-1"
-cidr_blocks = \["100.23.34.12/32"\]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
-}
+cidr_blocks = ["100.23.34.12/32"]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
+}`
 
-egress {
+`egress {
 from_port       = 0
 to_port         = 0
 protocol        = "-1"
-cidr_blocks     = \["0.0.0.0/0"\] #we want to open the outgoing connections to the world
+cidr_blocks     = ["0.0.0.0/0"] #we want to open the outgoing connections to the world
 }
-}
+}`
 
 \#userdata to install Nginx
 sudo apt-get update -y

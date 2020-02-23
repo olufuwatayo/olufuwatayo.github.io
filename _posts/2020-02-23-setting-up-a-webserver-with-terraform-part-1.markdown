@@ -61,10 +61,14 @@ You can also let terraform  import the public key to aws for you like this and r
 
 To do this generate your ssh key with this command  `ssh-keygen` and copy the content of the public key to `“public_key = "copy_content_of_public_key_ssh_here”` section of your aws key pair.
 
+{% highlight terraform %}
+
 `resource "aws_key_pair" "my_key" {
 key_name   = "my_key_name"
 public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
 }`
+
+{% endhighlight %}
 
 1. You can use terraform generate the public and private key pair with the help of open ssh and use it as a public key pair but that is beyond the scope of this article
 
@@ -76,25 +80,25 @@ A security group acts as a virtual firewall that controls the traffic for one or
 When you launch an instance, you can specify one or more security groups; otherwise, we use the default security group.
 
 To do that we can add this block of codes to terraform, what this does is that it allows all tcp traffic from only our IP address and can allow all outgoing connection from the instance to any ip address
-`resource "aws_security_group" "allow_from_my_ip" {
+resource "aws_security_group" "allow_from_my_ip" {
 name        = "allow_from_my_ip"
 description = "Allow all inbound traffic from my ip "
-#vpc_id      = "${aws_vpc.main.id}"`
+\#vpc_id      = "${aws_vpc.main.id}"
 
-`ingress {
+ingress {
 from_port   = 0
 to_port     = 0
 protocol    = "-1"
-cidr_blocks = ["100.23.34.12/32"]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
-}`
+cidr_blocks = \["100.23.34.12/32"\]  #add your IP address here to get your IP address type curl ifconfig.co in your terminal
+}
 
-`egress {
+egress {
 from_port       = 0
 to_port         = 0
 protocol        = "-1"
-cidr_blocks     = ["0.0.0.0/0"] #we want to open the outgoing connections to the world
+cidr_blocks     = \["0.0.0.0/0"\] #we want to open the outgoing connections to the world
 }
-}`
+}
 
 \#userdata to install Nginx
 sudo apt-get update -y

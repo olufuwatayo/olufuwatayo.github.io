@@ -1,5 +1,5 @@
 ---
-title: Setting up a webserver with terraform part 1
+title: Setting up a web server with terraform part 1
 date: 2020-02-23 12:56:00 Z
 tags:
 - Terraform

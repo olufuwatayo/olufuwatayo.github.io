@@ -29,13 +29,13 @@ Components of ansible core
 
 
 Control node
-Any machine with Ansible installed. You can run commands and playbooks from any control node. You can use any computer that has Python installed on it as a control node - laptops, shared desktops, and servers can all run Ansible. However, you cannot use a Windows machine as a control node. You can have multiple control nodes.
+Any machine that has Ansible installed. You can run ansible ad-hoc commands and Ansible playbooks from your control node. Any computer that has Python installed can be a control node - laptops, shared desktops, and servers can all run Ansible. However, you cannot use a Windows machine as a control node. 
 
-Managed nodes or hosts
-The network devices (and/or servers) you manage with Ansible. Managed nodes are also sometimes called “hosts”. Ansible is not installed on managed nodes but you need python installed for unix hosts and PowerShell 3.0 or newer and at least .NET 4.0 to be installed on the Windows host. Also, A WinRM listener should be created and activated for windows node. 
+Ansible hosts
+The resources you manage with Ansible. Ansible is not installed on managed nodes but you need python installed for unix hosts and PowerShell 3.0 or newer and at least .NET 4.0 to be installed on the Windows host. Also, A WinRM listener should be created and activated for windows node. 
 
 Inventory
-A list of managed nodes. An inventory file is also sometimes called a “hostfile”. Your inventory can specify information like IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling. 
+A list of ansible hosts. An inventory file is also sometimes called a “hostfile”. Your inventory can specify information like IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling. 
 
 Modules
 The units of code Ansible executes. Each module has a particular use, from administering users on a specific type of database to managing VLAN interfaces on a specific type of network device. You can invoke a single module with a task, or invoke several different modules in a playbook. 
@@ -58,6 +58,7 @@ After installing python run brew install ansible if you are on a mac os.
 An Ansible ad-hoc command uses the /usr/bin/ansible command-line tool to automate a single task on one or more managed nodes. Ad-hoc commands are quick and easy, but they are not re-usable. So why learn about ad-hoc commands first? Ad-hoc commands demonstrate the simplicity and power of Ansible
 
 #sshkeys
+
 #Disable host keys
 #username
 #Install lamp on one server

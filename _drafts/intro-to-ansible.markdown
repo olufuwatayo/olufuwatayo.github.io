@@ -3,6 +3,8 @@ title: Intro to Ansible
 date: 2020-02-29 22:52:00 Z
 ---
 
+This is going to be a basic article to get you started with Ansible and is intended for someone that has never used ansible before. 
+
 Ansible is way old, it was created in February 20, 2012(8 years ago) and it's still being used today for config management.
 
 [Configuration management (CM)](https://en.wikipedia.org/wiki/Configuration_management) is a systems engineering process for establishing and maintaining consistency of a product's performance, functional, and physical attributes with its requirements, design, and operational information throughout its life. **ELI5**: what this means is that you have your software installations, your configurations, and your updates defined as a code that is re-usable, understandable and version controlled. 
@@ -53,6 +55,17 @@ How to install brew install ansible
 Ensure you have python installed (most MacOs already have it pre-installed) else you might have to install it on your operating system.
 
 After installing python run brew install ansible if you are on a mac os.
+
+Let us take the server we created in our last tutorial here and install the same lamp server using ansible. 
+
+To do that we can need to create three files.
+
+main.yml this would be our entry pount for our ansible playbook
+ansible.cfg this is our ansible config
+hosts we would store our ansible host file here so ansible can connect.
+
+
+
 
 #adhoc module
 An Ansible ad-hoc command uses the /usr/bin/ansible command-line tool to automate a single task on one or more managed nodes. Ad-hoc commands are quick and easy, but they are not re-usable. So why learn about ad-hoc commands first? Ad-hoc commands demonstrate the simplicity and power of Ansible

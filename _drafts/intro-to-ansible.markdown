@@ -60,7 +60,7 @@ Let us take the server we created in our last tutorial here and install the same
 
 To do that we can need to create three files.
 
-main.yml this would be our entry pount for our ansible playbook
+main.yml this would be our entry point for our ansible-playbook
 ansible.cfg this is our ansible config
 hosts we would store our ansible host file here so ansible can connect.
 

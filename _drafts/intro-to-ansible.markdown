@@ -12,6 +12,15 @@ If you need to make changes to your configurations you can just update your iaac
 Benefit
 
 Why
+Speed 
+Automation
+Version Control 
+Team collaboration
+Repeatable
+
+
+
+
 
 Ansible
 

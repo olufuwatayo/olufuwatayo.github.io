@@ -24,4 +24,16 @@ Repeatable
 
 Ansible: Ansible is an open-source software provisioning, configuration management, and application-deployment tool. It runs on many Unix-like systems, and can configure both Unix-like systems as well as Microsoft Windows.
 
+#installation
+
 How to install brew install ansible
+Ensure you have python installed (most MacOs already have it pre-installed) else you might have to install it on your operating system.
+
+After installing python run brew install ansible if you ae on a 
+
+#adhoc module
+#sshkeys
+#Disable host keys
+#username
+#Install lamp on one server
+#install lamp on 2 servers

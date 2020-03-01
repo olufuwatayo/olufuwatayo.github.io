@@ -1,5 +1,5 @@
 ---
-title: Setting up a webserver with terraform part 2
+title: Setting up a web server with terraform part 2
 date: 2020-02-23 16:49:00 Z
 tags:
 - AWS

@@ -20,14 +20,14 @@ If you need to make changes to your configurations you can just update your iac 
 This is going to be a basic article to get you started with Ansible and is intended for someone that has never used ansible before.
 
 Benefit of using configuration management include:
-Speed
-Automation
-Version Control
-Team collaboration
-Repeatable
+* Speed
+* Automation
+* Version Control
+* Team collaboration
+* Repeatable
 
 
-Ansible: Ansible is an open-source software provisioning, configuration management, and application-deployment tool. It runs on many Unix-like systems, and can configure both Unix-like systems as well as Microsoft Windows.
+**Ansible**: Ansible is an open-source software provisioning, configuration management, and application-deployment tool. It runs on many Unix-like systems, and can configure both Unix-like systems as well as Microsoft Windows.
 
 Components of ansible core
 
@@ -49,13 +49,10 @@ The units of action in Ansible. You can execute a single task once with an ad-ho
 **Playbooks**
 Ordered lists of tasks, saved so you can run those tasks in that order repeatedly. Playbooks can include variables as well as tasks. Playbooks are written in YAML and are easy to read, write, share and understand.
 
-#installation we would be covering how to install ansible on Unix, for windows you can see this section
 
+To install Ansible on MacOS type `brew install ansible` on your terminal. Ensure you have python installed (most MacOs already have it pre-installed) else you might have to install it on your operating system.
 
-Ensure you have python installed (most MacOs already have it pre-installed) else you might have to install it on your operating system.
-To install Ansible on MacOS type `brew install ansible` on your terminal.
-
-Setting up a simple web-server with ansible: 
+Now let us set-up a simple web-server with ansible: 
 
 To do that we can need to create three files.
 

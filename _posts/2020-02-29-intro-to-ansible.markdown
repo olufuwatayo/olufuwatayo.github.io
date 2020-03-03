@@ -81,10 +81,10 @@ Copy this to the main.yml.
 
 **ansible.cfg** this is the file that defines the configs that allow ansible to interact with our host and other settings needed.
 
-[defaults]
+```[defaults]
 host_key_checking = False #You can disable this so ansible does not ask for host key here
 remote_user = ubuntu #Your ssh user should be here
-private_key_file = ~/.ssh/id_rsa #link to your private key here
+private_key_file = ~/.ssh/id_rsa ```
 
 
 
@@ -96,4 +96,6 @@ Just input your ip address in here and ensure that you can connect to it with yo
 run `ansible-playbook -i hosts.ini main.yml` 
 ![Screenshot 2020-03-02 at 20.36.19.png](/uploads/Screenshot%202020-03-02%20at%2020.36.19.png)
 
+Below we can see Nginx running on the servers 
+![nginx.png](/uploads/nginx.png)
 

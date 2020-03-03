@@ -5,21 +5,19 @@ date: 2020-02-29 22:52:00 Z
 
 Have you ever had to manage more than a single Linux server? Having to ssh into the severs and typing individual commands on terminal. What happens if you have to manage 20 or 30 servers ? What happens if you make a mistake and you need to start all over ?
 
-How many hours would it take ? 
-What of documentation and dependencies ?
-These are the challanges you would face if you don't automate the process of managing your configuration. Lucckily there is a concept that helps us achieve this and it's called Config Management
+How many hours would it take? 
+What of the documentation and dependencies?
+These are the challenges you would face if you don't automate the process of managing your configuration. Luckily there is a concept that helps us achieve this and it's called Config Management.
 
-This is going to be a basic article to get you started with Ansible and is intended for someone that has never used ansible before. 
-
-Ansible is way old, it was created in February 20, 2012(8 years ago) and it's still being used today for config management.
 
 [Configuration management (CM)](https://en.wikipedia.org/wiki/Configuration_management) is a systems engineering process for establishing and maintaining consistency of a product's performance, functional, and physical attributes with its requirements, design, and operational information throughout its life. **ELI5**: what this means is that you have your software installations, your configurations, and your updates defined as a code that is re-usable, understandable and version controlled. 
 
-If you need to make changes to your configurations you can just update your iaac codes and run it on your infrastructure without fear of it breaking your systems.
+If you need to make changes to your configurations you can just update your iac codes and run it on your infrastructure without fear of it breaking your systems.
 
-Benefit
+This is going to be a basic article to get you started with Ansible and is intended for someone that has never used ansible before. 
 
-Why
+
+Benefit of using configuration management include
 Speed 
 Automation
 Version Control 

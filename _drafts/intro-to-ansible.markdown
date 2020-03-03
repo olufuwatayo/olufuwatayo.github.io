@@ -56,7 +56,7 @@ Setting up a simple web-server with ansible:
 To do that we can need to create three files.
 
 **main.yml** this would be our entry point for our ansible-playbook
-ansible.cfg this is the file that defines the configs that allows ansible interact with our host and other settings needed.
+ansible.cfg this is the file that defines the configs that allow ansible to interact with our host and other settings needed.
 
 Copy this to the main.yml.
 {% highlight yaml %}
@@ -67,7 +67,7 @@ Copy this to the main.yml.
   become: True
   become_user: root
   become_method: sudo
-  hosts: web
+  hosts: all
   tasks:
     - name: Install Lamp Server
       apt:

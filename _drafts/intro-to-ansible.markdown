@@ -56,7 +56,6 @@ Setting up a simple web-server with ansible:
 To do that we can need to create three files.
 
 **main.yml** this would be our entry point for our ansible-playbook
-ansible.cfg this is the file that defines the configs that allow ansible to interact with our host and other settings needed.
 
 Copy this to the main.yml.
 {% highlight yaml %}
@@ -76,15 +75,16 @@ Copy this to the main.yml.
 {% endhighlight %}
 
 
+**ansible.cfg** this is the file that defines the configs that allow ansible to interact with our host and other settings needed.
+
+[defaults]
+host_key_checking = False #You can disable this so ansible does not ask for host key here
+remote_user = ubuntu #Your ssh user should be here
+private_key_file = ~/.ssh/id_rsa #link to your private key here
+
+
 
 **hosts.ini** we would store our ansible host file here so ansible can connect to them.
+Just store your ip address in here and ensure that you can connect to it with your ssh key.
 
-#adhoc module
-An Ansible ad-hoc command uses the /usr/bin/ansible command-line tool to automate a single task on one or more managed nodes. Ad-hoc commands are quick and easy, but they are not re-usable. So why learn about ad-hoc commands first? Ad-hoc commands demonstrate the simplicity and power of Ansible
 
-\#sshkeys
-
-\#Disable host keys
-\#username
-\#Install lamp on one server
-\#install lamp on 2 servers

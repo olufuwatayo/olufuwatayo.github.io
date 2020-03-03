@@ -1,7 +1,6 @@
 ---
 title: Intro to Ansible
 date: 2020-02-29 22:52:00 Z
-published: false
 ---
 
 Have you ever had to manage more than a single Linux server? Having to ssh into the severs and typing individual commands on the terminal. What happens if you have to manage 20 or 30 servers? What happens if you make a mistake and you need to start all over?

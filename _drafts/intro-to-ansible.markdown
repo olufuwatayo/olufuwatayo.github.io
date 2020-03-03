@@ -3,6 +3,12 @@ title: Intro to Ansible
 date: 2020-02-29 22:52:00 Z
 ---
 
+Have you ever had to manage more than a single Linux server? Having to ssh into the severs and typing individual commands on terminal. What happens if you have to manage 20 or 30 servers ? What happens if you make a mistake and you need to start all over ?
+
+How many hours would it take ? 
+What of documentation and dependencies ?
+These are the challanges you would face if you don't automate the process of managing your configuration. Lucckily there is a concept that helps us achieve this and it's called Config Management
+
 This is going to be a basic article to get you started with Ansible and is intended for someone that has never used ansible before. 
 
 Ansible is way old, it was created in February 20, 2012(8 years ago) and it's still being used today for config management.

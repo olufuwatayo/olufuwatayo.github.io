@@ -19,7 +19,7 @@ If you need to make changes to your configurations you can just update your iac 
 
 This is going to be a basic article to get you started with Ansible and is intended for someone that has never used ansible before.
 
-Benefit of using configuration management include:
+The benefits of using configuration management include:
 * Speed
 * Automation
 * Version Control
@@ -35,10 +35,10 @@ Components of ansible core
 Any machine that has Ansible installed. You can run ansible ad-hoc commands and Ansible playbooks from your control node. Any computer that has Python installed can be a control node - laptops, shared desktops, and servers can all run Ansible. However, you cannot use a Windows machine as a control node.
 
 **Ansible slaves / host**
-The resources you manage with Ansible. Ansible is not installed on managed nodes but you need python installed for unix hosts and PowerShell 3.0 or newer and at least .NET 4.0 to be installed on the Windows host. Also, A WinRM listener should be created and activated for windows node.
+The resources you manage with Ansible. Ansible is not installed on managed nodes but you need python installed for Unix hosts and PowerShell 3.0 or newer and at least .NET 4.0 to be installed on the Windows host. Also, A WinRM listener should be created and activated for windows node.
 
 **Inventory**
-A list of ansible hosts. An inventory file is also sometimes called a “hostfile”. Your inventory can specify information like IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling.
+A list of ansible hosts. An inventory file is also sometimes called a “hostfile”. Your inventory can specify information like the IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling.
 
 **Modules**
 The units of code Ansible executes. Each module has a particular use, from administering users on a specific type of database to managing VLAN interfaces on a specific type of network device. You can invoke a single module with a task, or invoke several different modules in a playbook.
@@ -86,7 +86,7 @@ private_key_file = ~/.ssh/id_rsa ```
 
 
 **hosts.ini** we would store our ansible host file here so ansible can connect to them.
-Just input your ip address in here and ensure that you can connect to it with your ssh key.
+Just input your IP address in here and ensure that you can connect to it with your ssh key.
 ![Screenshot 2020-03-02 at 20.34.02.png](/uploads/Screenshot%202020-03-02%20at%2020.34.02.png)
 
 

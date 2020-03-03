@@ -85,6 +85,11 @@ private_key_file = ~/.ssh/id_rsa #link to your private key here
 
 
 **hosts.ini** we would store our ansible host file here so ansible can connect to them.
-Just store your ip address in here and ensure that you can connect to it with your ssh key.
+Just input your ip address in here and ensure that you can connect to it with your ssh key.
+![Screenshot 2020-03-02 at 20.34.02.png](/uploads/Screenshot%202020-03-02%20at%2020.34.02.png)
+
+
+run `ansible-playbook -i hosts.ini main.yml` 
+![Screenshot 2020-03-02 at 20.36.19.png](/uploads/Screenshot%202020-03-02%20at%2020.36.19.png)
 
 

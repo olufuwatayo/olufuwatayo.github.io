@@ -9,12 +9,18 @@ If you are new to terraform you can read the introduction here and also spin up 
 
 There are so many ways we can achieve this by using ansible
 
-We can use terraform local exec
+We can use terraform local exec:
+The local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource. See the remote-exec provisioner to run commands on the resource.
+
+
+
 
 provisioner "local-exec" {
     command = "ansible-playbook -i '${self.public_ip},' --private-key ${var.ssh_key_private} provision.yml"
 }
-Remote exec 
+Remote exec:
+
+The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc
 
 provisioner "remote-exec" {
     inline = ["sudo dnf -y install python"]

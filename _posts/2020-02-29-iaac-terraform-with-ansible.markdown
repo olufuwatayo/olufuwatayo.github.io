@@ -54,9 +54,7 @@ resource "aws_instance" "web" {
   }
 }
 
-#userdata to run ansible
 
-
-#terraforming 
+#terraforming there is a GitHub module that actually fetches your terraform state file and fetches the IP addresses of the instances 
 
 #we can create a packer file that creates the ami and we can use the ami in terraform.

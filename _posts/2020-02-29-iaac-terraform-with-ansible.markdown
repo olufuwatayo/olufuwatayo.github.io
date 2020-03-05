@@ -55,6 +55,6 @@ resource "aws_instance" "web" {
 }
 
 
-#terraforming there is a GitHub module that actually fetches your terraform state file and fetches the IP addresses of the instances 
+#terraforming there is a GitHub module that actually fetches your terraform state file and fetches the IP addresses of the instances and 
 
 #we can create a packer file that creates the ami and we can use the ami in terraform.

@@ -30,22 +30,19 @@ aws_instance.web[1] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible
 You can get the full script here [https://github.com/olufuwatayo/terraform-ansible-local-exec](https://github.com/olufuwatayo/terraform-ansible-local-exec)
 **Remote exec:**
 
-The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc
+The remote-exec provisioner invokes a script on a remote resource after it is created. We would use this to run the ansible playbook on the instace after it has been created. 
 
 provisioner "remote-exec" {
-    inline = ["sudo dnf -y install python"]
+    inline = ["sudo dnf -y install python"] # We would install python because ansible needs python to run
 
     connection {
       type        = "ssh"
-      user        = "ubuntu"
-      private_key = "${file(var.ssh_key_private)}"
+      user        = "ubuntu" # Username is ubuntu 
+      private_key = "${file(var.ssh_key_private)}" #Terraform needs your private key so it can connect to your instance and of course run the commands
     }
   }
 
-  provisioner "local-exec" {
-    command = "ansible-playbook -u ubuntu -i '${self.public_ip},'  ${var.ssh_key_private} provision.yml" 
-  }
-
+But this above would just run the commands but how do we copy over ansible playbook to the target instance with terraform ? We can use file provisioner. This 
 this would translate to 
 **User data** We can use Userdata  to install, python, ansible, clone the ansible repo and then make ansible run locally in the 
 

@@ -19,6 +19,11 @@ To do that we would add this block to our terraform resource code and we would r
 provisioner "local-exec" {
     command = "ansible-playbook -i '${self.public_ip},' --private-key ${var.ssh_key_private} provision.yml"
 }
+This is how local exec looks while executing 
+
+aws_instance.web[0] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible-playbook -u ubuntu -i '54.166.193.27,' main.yml"]
+aws_instance.web[1]: Provisioning with 'local-exec'...
+aws_instance.web[1] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible-playbook -u ubuntu -i '54.80.114.58,' main.yml"]
 
 **Remote exec:**
 
@@ -35,9 +40,10 @@ provisioner "remote-exec" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u fedora -i '${self.public_ip},' --private-key ${var.ssh_key_private} provision.yml" 
+    command = "ansible-playbook -u ubuntu -i '${self.public_ip},'  ${var.ssh_key_private} provision.yml" 
   }
 
+this would translate to 
 **User data** We can use Userdata  to install, python, ansible, clone the ansible repo and then make ansible run locally in the 
 
 To do that let us create the infrastructure using terraform 

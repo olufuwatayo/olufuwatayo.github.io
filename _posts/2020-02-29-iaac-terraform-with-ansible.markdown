@@ -16,15 +16,18 @@ The local-exec provisioner invokes a local executable after a resource is create
 
 To do that we would add this block to our terraform resource code and we would reference our Ansible playbook.
 
-provisioner "local-exec" {
-    command = "ansible-playbook -i '${self.public_ip},' --private-key ${var.ssh_key_private} provision.yml"
-}
-This is how local exec looks while executing 
+  provisioner "local-exec" {
+    command = "sleep 120; ansible-playbook -u ubuntu -i '${self.public_ip},' main.yml"
+  }
+
+What this does is it sleeps for 120 secs and wait for the instance to boot before running ansible locally. We need the ansible-playbook file and the folders to run ansible in the same folder as the terraform config files (although you can add it in another folder and still reference it). 
 
 aws_instance.web[0] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible-playbook -u ubuntu -i '54.166.193.27,' main.yml"]
 aws_instance.web[1]: Provisioning with 'local-exec'...
 aws_instance.web[1] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible-playbook -u ubuntu -i '54.80.114.58,' main.yml"]
 
+
+You can get the full script here [https://github.com/olufuwatayo/terraform-ansible-local-exec](https://github.com/olufuwatayo/terraform-ansible-local-exec)
 **Remote exec:**
 
 The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc

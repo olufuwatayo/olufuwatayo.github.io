@@ -42,8 +42,21 @@ provisioner "remote-exec" {
     }
   }
 
-But this above would just run the commands but how do we copy over ansible playbook to the target instance with terraform ? We can use file provisioner. This 
-this would translate to 
+But this above would just run the commands but how do we copy over ansible playbook to the target instance with terraform ? We can use a file provisioner. The file provisioner is used to copy files or directories from the machine executing Terraform to the newly created resource. 
+
+
+
+provisioner "file" {
+  source      = "conf/myapp.conf"
+  destination = "/etc/myapp.conf"
+
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = "${var.root_password}"
+    host     = "${var.host}"
+  }
+}
 **User data** We can use Userdata  to install, python, ansible, clone the ansible repo and then make ansible run locally in the 
 
 To do that let us create the infrastructure using terraform 

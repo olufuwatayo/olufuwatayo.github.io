@@ -31,31 +31,78 @@ You can get the full script here [https://github.com/olufuwatayo/terraform-ansib
 
 The remote-exec provisioner invokes a script on a remote resource after it is created. We would use this to run the ansible playbook on the instace after it has been created. 
 
-provisioner "remote-exec" {
-    inline = ["sudo dnf -y install python"] # We would install python because ansible needs python to run
 
+To do this we need to copy the files and folder to the instance and run ansible playbook riught insid ethe instance 
+
+{% highlight terraform %}
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  // count = 2
+  key_name        = "ty"
+  security_groups = ["${aws_security_group.allow_from_my_ip.name}"]
+
+
+  provisioner "file" {
+    source      = "." #the source is the current working directory
+    destination = "~"
+
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+
+      host = "${self.public_ip}"
+    }
+  }
+  provisioner "remote-exec" {
+    inline = ["sudo apt-get -y install python"] # We would install python because ansible needs python to run
     connection {
       type        = "ssh"
       user        = "ubuntu" # Username is ubuntu 
-      private_key = "${file(var.ssh_key_private)}" #Terraform needs your private key so it can connect to your instance and of course run the commands
+      host        = "${self.public_ip}"
+      private_key = file("~/.ssh/id_rsa") #Terraform needs your private key so it can connect to your instance and of course run the commands
     }
   }
 
-But this above would just run the commands but how do we copy over ansible playbook to the target instance with terraform ? We can use a file provisioner. The file provisioner is used to copy files or directories from the machine executing Terraform to the newly created resource. 
+
+  provisioner "remote-exec" {
+    inline = ["sudo apt-get -y install ansible"] # We would install ansible because ansible needs to run our playbooks
+
+    connection {
+      type        = "ssh"
+      host        = "${self.public_ip}"
+      user        = "ubuntu"              # Username is ubuntu 
+      private_key = file("~/.ssh/id_rsa") #Terraform needs your private key so it can connect to your instance and of course run the commands
+    }
+  }
 
 
+  provisioner "remote-exec" {
+    inline = ["sudo ansible-playbook -i hosts.ini main.yml"] # run the playbook
 
-provisioner "file" {
-  source      = "conf/myapp.conf"
-  destination = "/etc/myapp.conf"
+    connection {
+      type        = "ssh"
+      host        = "${self.public_ip}"
+      user        = "ubuntu"              # Username is ubuntu 
+      private_key = file("~/.ssh/id_rsa") #Terraform needs your private key so it can connect to your instance and of course run the commands
+    }
+  }
 
-  connection {
-    type     = "ssh"
-    user     = "root"
-    password = "${var.root_password}"
-    host     = "${var.host}"
+  provisioner "local-exec" {
+    command = <<EOT
+      sleep 30;
+	  echo "${aws_instance.web.public_ip}" | tee -a hosts.ini;
+    EOT
+  }
+
+  tags = {
+    Name = "Nginx_web_server"
   }
 }
+
+{% endhighlight %}
+
 **User data** We can use Userdata  to install, python, ansible, clone the ansible repo and then make ansible run locally in the 
 
 It's simple as adding this to your [user data file ](https://github.com/olufuwatayo/terraform-aws-ec2-nginx/blob/master/myuserdata.tpl)

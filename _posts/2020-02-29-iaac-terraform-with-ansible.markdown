@@ -58,8 +58,16 @@ provisioner "file" {
 }
 **User data** We can use Userdata  to install, python, ansible, clone the ansible repo and then make ansible run locally in the 
 
-To do that let us create the infrastructure using terraform 
+It's simple as adding this to your [user data file ](https://github.com/olufuwatayo/terraform-aws-ec2-nginx/blob/master/myuserdata.tpl)
 
+
+#!/bin/bash
+sudo apt-get update -y
+sudo apt-get install ansible -y
+sudo apt-get install ansible -y 
+git clone repo link here
+cd into repo link
+execute playbook 
 
 #local Exec 
 The local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource.

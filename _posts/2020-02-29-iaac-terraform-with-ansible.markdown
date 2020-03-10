@@ -124,6 +124,6 @@ sudo apt-get install ansible -y
 {% endhighlight %}
 
 
-Finally you can use [terraforming](https://github.com/dtan4/terraforming) a GitHub module that actually fetches your terraform state file and uses the value IP addresses of the instances as ansible-playbook host inventory.   
+Finally you can use [terraform-inventory](https://github.com/adammck/terraform-inventory) a GitHub module that actually fetches your terraform state file and uses the value IP addresses of the instances as ansible-playbook host inventory.   
 
 #we can create a packer file that creates the ami and we can use the ami in terraform.

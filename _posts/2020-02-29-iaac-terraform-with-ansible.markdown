@@ -14,25 +14,29 @@ The local-exec provisioner invokes a local executable after a resource is create
 
 
 To do that we would add this block to our terraform resource code and we would reference our Ansible playbook.
+{% highlight terraform %}
 
   provisioner "local-exec" {
     command = "sleep 120; ansible-playbook -u ubuntu -i '${self.public_ip},' main.yml"
   }
 
+{% endhighlight %}
 What this does is it sleeps for 120 secs and wait for the instance to boot before running ansible locally. We need the ansible-playbook file and the folders to run ansible in the same folder as the terraform config files (although you can add it in another folder and still reference it). 
+{% highlight terraform %}
 
 aws_instance.web[0] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible-playbook -u ubuntu -i '54.166.193.27,' main.yml"]
 aws_instance.web[1]: Provisioning with 'local-exec'...
 aws_instance.web[1] (local-exec): Executing: ["/bin/sh" "-c" "sleep 120; ansible-playbook -u ubuntu -i '54.80.114.58,' main.yml"]
 
+{% endhighlight %}
 
 You can get the full script here [https://github.com/olufuwatayo/terraform-ansible-local-exec](https://github.com/olufuwatayo/terraform-ansible-local-exec)
 **Remote exec:**
 
-The remote-exec provisioner invokes a script on a remote resource after it is created. We would use this to run the ansible playbook on the instace after it has been created. 
+The remote-exec provisioner invokes a script on a remote resource after it is created. We would use this to run the ansible playbook on the instance after it has been created. 
 
 
-To do this we need to copy the files and folder to the instance and run ansible playbook riught insid ethe instance 
+To do this we need to copy the files and folder to the instance and run ansible-playbook right inside the instance 
 
 {% highlight terraform %}
 
@@ -107,27 +111,19 @@ resource "aws_instance" "web" {
 
 It's simple as adding this to your [user data file ](https://github.com/olufuwatayo/terraform-aws-ec2-nginx/blob/master/myuserdata.tpl)
 
+{% highlight bash %}
 
 #!/bin/bash
 sudo apt-get update -y
 sudo apt-get install ansible -y
 sudo apt-get install ansible -y 
-git clone repo link here
-cd into repo link
-execute playbook 
+#git clone repo link here
+#cd into repo link
+#execute playbook 
 
-#local Exec 
-The local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource.
-
-resource "aws_instance" "web" {
-  # ...
-
-  provisioner "local-exec" {
-    command = "sleep 120;  echo ${aws_instance.web.private_ip} >> private_ips.txt"
-  }
-}
+{% endhighlight %}
 
 
-#terraforming there is a GitHub module that actually fetches your terraform state file and fetches the IP addresses of the instances and 
+Finally you can use [terraforming](https://github.com/dtan4/terraforming) a GitHub module that actually fetches your terraform state file and uses the value IP addresses of the instances as ansible-playbook host inventory.   
 
 #we can create a packer file that creates the ami and we can use the ami in terraform.

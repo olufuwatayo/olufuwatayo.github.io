@@ -3,7 +3,7 @@ title: IAAC - Terraform with Ansible
 date: 2020-02-29 22:52:00 Z
 ---
 
-In our last post, we learned the basics of Ansible and how we set up a basic web server instance with Ansible. Today we would be exploring how we can automate the whole process of creating our infrastructure with terraform and managing it with ansible.
+In our [last post](http://www.olufuwatayo.com/intro-to-ansible/), we learned the basics of Ansible and how we set up a basic web server instance with Ansible. Today we would be exploring how we can automate the whole process of creating our infrastructure with terraform and managing it with ansible.
 
 If you are new to terraform you can read the introduction here and also spin up a simple web server here, Today we would be using terraform to create 5 ec2 instances and have ansible installs Nginx on the instances all automated.
 
@@ -126,4 +126,4 @@ sudo apt-get install ansible -y
 
 Finally you can use [terraform-inventory](https://github.com/adammck/terraform-inventory) a GitHub module that actually fetches your terraform state file and uses the value IP addresses of the instances as ansible-playbook host inventory.   
 
-#we can create a packer file that creates the ami and we can use the ami in terraform.
+In the next tutorial we would talk about using packer to create our [ami](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) and we can use the ami to deploy our webserver in terraform.

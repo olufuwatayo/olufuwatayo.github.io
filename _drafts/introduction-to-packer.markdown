@@ -9,3 +9,9 @@ A no bull shit intro to packer
 
 An Amazon Machine Image (AMI) provides the information required to launch an instance. You must specify an AMI when you launch an instance. You can launch multiple instances from a single AMI when you need multiple instances with the same configuration. You can use different AMIs to launch instances when you need instances with different configurations.
 
+
+Think of ami as Operating system that you install on your computer, you can have different operating system but you must install one on your computer. You can have Windows 2012, Linux ubuntu 14 or 16 or Fedora Linux. These are reffered to as images and you can build your image using the base image.
+
+A base image is like a clean fresh of an operating system meaning it's factore default settings and contains no bkloatware or anything.
+
+You can define and customize your image to include any software you want 
